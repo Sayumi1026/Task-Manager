@@ -1,10 +1,23 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import TaskItem from "./components/TaskItem";
 import "./index.css";
 
 function App() {
   const [task, setTask] = useState("");
-  const [tasks, setTasks] = useState([]);
+
+  const [tasks, setTasks] = useState(() => {
+    const savedTasks = localStorage.getItem("tasks");
+
+    if (savedTasks) {
+      return JSON.parse(savedTasks);
+    }
+
+    return [];
+  });
+
+  useEffect(() => {
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+  }, [tasks]);
 
   const addTask = () => {
     if (task.trim() === "") {
@@ -49,6 +62,10 @@ function App() {
     <div className="container">
       <h1>Student Task Manager</h1>
 
+      <p className="subtitle">
+        Organize your daily tasks efficiently
+      </p>
+
       <div className="input-section">
         <input
           type="text"
@@ -57,19 +74,48 @@ function App() {
           onChange={(e) => setTask(e.target.value)}
         />
 
-        <button className="add-button" onClick={addTask}>Add</button>
+        <button
+          className="add-button"
+          onClick={addTask}
+        >
+          Add
+        </button>
+      </div>
+
+      <div className="stats">
+        <div className="stat-card">
+          <h3>Total Tasks</h3>
+          <p>{tasks.length}</p>
+        </div>
+
+        <div className="stat-card">
+          <h3>Completed</h3>
+          <p>
+            {
+              tasks.filter(
+                (task) => task.completed
+              ).length
+            }
+          </p>
+        </div>
       </div>
 
       <ul>
-        {tasks.map((item, index) => (
-          <TaskItem
-            key={index}
-            task={item}
-            index={index}
-            deleteTask={deleteTask}
-            toggleComplete={toggleComplete}
-          />
-        ))}
+        {tasks.length === 0 ? (
+          <p className="empty-message">
+            No tasks yet 🚀
+          </p>
+        ) : (
+          tasks.map((item, index) => (
+            <TaskItem
+              key={index}
+              task={item}
+              index={index}
+              deleteTask={deleteTask}
+              toggleComplete={toggleComplete}
+            />
+          ))
+        )}
       </ul>
     </div>
   );
