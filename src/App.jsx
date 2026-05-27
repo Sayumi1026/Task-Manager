@@ -1,7 +1,9 @@
 import { useState } from "react";
+import TaskItem from "./components/TaskItem";
+import './index.css'
 
-function App(){
 
+function App() {
   const [task, setTask] = useState("");
   const [tasks, setTasks] = useState([]);
 
@@ -14,25 +16,39 @@ function App(){
     setTask("");
   };
 
+  const deleteTask = (indexToDelete) => {
+    const updatedTasks = tasks.filter(
+      (_, index) => index !== indexToDelete
+    );
+
+    setTasks(updatedTasks);
+  };
+
   return (
-    <div>
+    <div classname="container">
       <h1>Student Task Manager</h1>
 
-      <input type="text" 
-            placeholder="Enter a new task..." 
-            value={task}
-            onChange={(e) => setTask(e.target.value)}
-            />
+      <div classname="input-section">
+      <input
+        type="text"
+        placeholder="Enter task"
+        value={task}
+        onChange={(e) => setTask(e.target.value)}
+      />
 
       <button onClick={addTask}>Add</button>
+      </div>
 
       <ul>
         {tasks.map((item, index) => (
-          <li key={index}>{item}</li>
+          <TaskItem
+            key={index}
+            task={item}
+            index={index}
+            deleteTask={deleteTask}
+          />
         ))}
       </ul>
-
-
     </div>
   );
 }
