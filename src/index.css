@@ -14,17 +14,23 @@ body {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
+/* Heading */
+
 h1 {
   text-align: center;
   color: #010631;
   margin-bottom: 25px;
 }
 
+/* Input Section */
+
 .input-section {
   display: flex;
   gap: 10px;
   margin-bottom: 20px;
 }
+
+/* Input */
 
 input {
   flex: 1;
@@ -40,28 +46,56 @@ input:focus {
   border-color: #4a90e2;
 }
 
+/* General Button */
 
 button {
   padding: 12px 18px;
   border: none;
   border-radius: 8px;
-  background-color: #4a90e2;
   color: white;
-  font-size: 20px;
+  font-size: 16px;
   cursor: pointer;
   transition: 0.3s;
 }
 
-button:hover {
+/* Add Button */
+
+.add-button {
+  background-color: #4a90e2;
+}
+
+.add-button:hover {
   background-color: #022242;
 }
 
+/* Complete Button */
+
+.button-complete {
+  background-color: #26961e;
+}
+
+.button-complete:hover {
+  background-color: #14590f;
+}
+
+/* Delete Button */
+
+.delete-button {
+  background-color: #ff4d4d;
+}
+
+.delete-button:hover {
+  background-color: #d93636;
+}
+
+/* Task List */
 
 ul {
   list-style: none;
   padding: 0;
 }
 
+/* Task Item */
 
 li {
   background: #f9f9f9;
@@ -72,14 +106,13 @@ li {
   display: flex;
   justify-content: space-between;
   align-items: center;
+
   font-size: 18px;
 }
 
+/* Button Group */
 
-li button {
-  background-color: #ff4d4d;
-}
-
-li button:hover {
-  background-color: #d93636;
+.button-group {
+  display: flex;
+  gap: 10px;
 }

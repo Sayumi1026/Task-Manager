@@ -1,7 +1,6 @@
 import { useState } from "react";
 import TaskItem from "./components/TaskItem";
-import './index.css'
-
+import "./index.css";
 
 function App() {
   const [task, setTask] = useState("");
@@ -12,7 +11,14 @@ function App() {
       return;
     }
 
-    setTasks([...tasks, task]);
+    setTasks([
+      ...tasks,
+      {
+        text: task,
+        completed: false,
+      },
+    ]);
+
     setTask("");
   };
 
@@ -24,19 +30,34 @@ function App() {
     setTasks(updatedTasks);
   };
 
+  const toggleComplete = (indexToToggle) => {
+    const updatedTasks = tasks.map((task, index) => {
+      if (index === indexToToggle) {
+        return {
+          ...task,
+          completed: !task.completed,
+        };
+      }
+
+      return task;
+    });
+
+    setTasks(updatedTasks);
+  };
+
   return (
-    <div classname="container">
+    <div className="container">
       <h1>Student Task Manager</h1>
 
-      <div classname="input-section">
-      <input
-        type="text"
-        placeholder="Enter task"
-        value={task}
-        onChange={(e) => setTask(e.target.value)}
-      />
+      <div className="input-section">
+        <input
+          type="text"
+          placeholder="Enter task"
+          value={task}
+          onChange={(e) => setTask(e.target.value)}
+        />
 
-      <button onClick={addTask}>Add</button>
+        <button className="add-button" onClick={addTask}>Add</button>
       </div>
 
       <ul>
@@ -46,6 +67,7 @@ function App() {
             task={item}
             index={index}
             deleteTask={deleteTask}
+            toggleComplete={toggleComplete}
           />
         ))}
       </ul>
